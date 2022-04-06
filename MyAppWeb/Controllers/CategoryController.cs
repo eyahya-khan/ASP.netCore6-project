@@ -20,7 +20,7 @@ namespace MyAppWeb.Controllers
             
             return View(categories);
         }
-
+        //create
         [HttpGet]
         public IActionResult Create()
         {
@@ -39,5 +39,37 @@ namespace MyAppWeb.Controllers
             }
             return View();
         }
+
+         //edit
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id==0)
+            {
+                return NotFound();
+            }
+            var category = _context.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+
+
     }
 }
