@@ -20,6 +20,7 @@ namespace MyAppWeb.Controllers
             
             return View(categories);
         }
+        
         //create
         [HttpGet]
         public IActionResult Create()
@@ -40,7 +41,7 @@ namespace MyAppWeb.Controllers
             return View();
         }
 
-         //edit
+        //edit
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -53,7 +54,7 @@ namespace MyAppWeb.Controllers
             {
                 return NotFound();
             }
-            return View();
+            return View(category);
         }
 
         [HttpPost]
@@ -62,13 +63,42 @@ namespace MyAppWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(category);
+                _context.Categories.Update(category);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
+        //delete
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var category = _context.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteData(int? id)
+        {
+            var category = _context.Categories.Find(id);
+            if(category == null)
+            {   
+               return NotFound();
+            }
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
 
     }
