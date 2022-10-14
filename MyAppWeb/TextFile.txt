@@ -1,0 +1,110 @@
+﻿******* Database connection with code first approach ******
+
+step-1: create Model
+        model ==>>> program.cs
+
+step-2: create dbContext
+        Date ==>>> ApplicationDbContext.cs
+        public DbSet<modelname> tablename { get; set; }
+
+step-3:appsettings.json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=MyAppWebDB;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+
+step-4: register db context file to program.cs
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+step-5: install 3 package
+        right click on app file >>> choose "Manage NuGet packages..." ans install
+        1. Microsoft.EntityFrameworkCore(6.0.3)
+        2. Microsoft.EntityFrameworkCoreSqlServer(6.0.3)
+        3. Microsoft.EntityFrameworkCoreTools(6.0.3)
+
+step-6: create database
+        tools>>>NuGet Package Manager >>> Package Manager Console
+        add-migration AddCategoryToDatabase
+        update-database
+
+        //remove-migration
+
+step-7: Check connection of database
+
+        tools >>> connect to database
+        server name: (localdb)\mssqllocaldb
+
+
+
+
+******* Razor page *******
+
+step-1: create ragor page view (skaffolding)
+  controller >>> right click on IActionResult index() >>> add view >>> razor view (empty)>>> add
+
+
+
+
+******* Bootswatck theme *******
+
+step-1: www.bootswatch.com
+
+step-2: select one theme like "superhero" >>> click download >>> copy all code
+
+step-3: goto wwwroot >>> css >>> right click >>> add >>> stylesheet >>> paste
+
+step-4: goto view >>> Shared >>> _Layout.cshtml >>> <link rel="stylesheet" href="~/css/Superherobootswatch.css" />
+
+
+
+
+******* Bootstrap Icon *******
+
+step-1: https://icons.getbootstrap.com/icons/plus-circle/
+
+step-2: copy Icon font >>> view >>> category >>> index.cshtml >>> paste
+
+step-3: goto view >>> Shared >>> _Layout.cshtml >>> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+
+
+
+******* Server side validation *******
+
+step-1: In CategoryController.ch line 35  'if (ModelState.IsValid){ }' is used to validate empty value entry in database.
+
+step-2: In views/Category/Create.cshtml file line 5, 15, 20
+
+
+
+******* client side validation *******
+
+step-1: In views/Category/Create.cshtml file line 27
+
+step-2: _ValidationScriptspartial from shared/_ValidationScriptspartial.cshtml
+
+step-3: Model/Category.cs file line 14 to display "Display Order"
+
+
+
+
+******* Temp date *******
+
+step-1: Tempdata is used to display msg only for one time
+
+step-2: In CategoryController.cs file line 39, 69, 102
+
+
+
+
+******* Toastr Notification *******
+
+step-1: In Shared/_Layout.cshtml file add  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+
+step-2: In  Shared/_Notification.cshtml
+
+
+

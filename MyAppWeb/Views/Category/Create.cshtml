@@ -1,11 +1,13 @@
 ﻿@model Category
 
+
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-3">
             <h2 class="text-primary">Category</h2>
             <hr/>
         </div>
+        @*all error msg display here*@
         <div asp-validation-summary=All class="text-danger"></div>
         <div class="row mb-3">
             <label asp-for="Name"></label>
@@ -15,7 +17,6 @@
         <div class="row mb-3">
             <label asp-for="DisplayOrder"></label>
             <input asp-for="DisplayOrder" class="form-control"/>
-            
             @*<span asp-validation-for="DisplayOrder" class="text-danger"></span>*@
         </div>
         <button class="btn btn-primary" type="submit">Create</button>

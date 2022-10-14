@@ -10,8 +10,8 @@ namespace MyAppWeb.Models
 
         [Required]
         public string Name { get; set; }
-        [DisplayName("Display order")]  
 
+        [DisplayName("Display order")]  
         public int DisplayOrder { get; set; }
 
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
