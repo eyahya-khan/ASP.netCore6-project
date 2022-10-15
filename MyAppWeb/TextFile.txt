@@ -165,7 +165,7 @@ step-8: In HomeController.cs & CategoryController.cs add [Area("Customer")] & [A
 
 
 
-
+// New product add
 ******* Product class & product table  *******
 
 Step-1: Right click on MyAppModels >>> add >>> class >>> product.cs
@@ -175,3 +175,16 @@ step-2: Data >>> public DbSet<Product> Product { get; set; }
 step-3: tools >>> NuGet Package Manager >>> Package Manager Console >>> Default project: MyApp.DataAccessLayer
         add-migration AddProduct
         update-database
+
+
+
+
+******* Product & IProduct repository  *******
+
+step-1: Create IProdctRepository.cs & ProductRepository.cs into infrastructure/IRepository and infrastructure/Repository
+
+step-2: Add 'IProductRepository Product { get; }' into Repository/IUnitOfWork.cs
+
+step-3: Change in UnitOfWork.cs file also.
+
+step-4: Update method should be change in CategoryRepository.cs & ProductRepository.cs
