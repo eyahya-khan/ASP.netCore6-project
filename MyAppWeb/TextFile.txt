@@ -91,7 +91,7 @@ step-3: Model/Category.cs file line 14 to display "Display Order"
 
 
 
-******* Temp date *******
+******* Temp data *******
 
 step-1: Tempdata is used to display msg only for one time
 
@@ -133,3 +133,45 @@ step-1: In program.cs file add 'builder.Services.AddScoped<IUnitOfWork,UnitOfWor
 
 step-2: In CategoryController.cs file, we use scooped instead of AddDbContext
 
+
+
+
+******* Migrations namespace  *******
+
+step-1: Check migrations all file namespace is correct
+
+
+
+
+******* ASP.NET area  *******
+
+(Area are two type: Admin and Customer)
+
+step-1: Right click on MyAppWeb >>> add >>> new skaffolded item >>> MVC area >>> Admin
+
+step-2: Right click on Area >>> add >>> new skaffolded item >>> MVC area >>> Customer
+
+step-3: In Program.cs >>> pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
+step-4: As because we made Data & Model folder before, so delete Data & Model folder from both Adminb & Customer
+
+step-5: Move Category folder, _ViewImports.cshtml, _ViewStart.cshtml from Views folder to Admin >>> Views and Home folder, _ViewImports.cshtml, _ViewStart.cshtml from Views folder to Customer >>> Views
+
+step-6: Move Controllers/Category.cs file into Admin >>> Controllers and Controllers/Home.cs file to Customer >>> Controllers
+
+step-7: In Shared/_Layout.cshtml update asp-area="Admin" & asp-area="Customer"
+
+step-8: In HomeController.cs & CategoryController.cs add [Area("Customer")] & [Area("Admin")] after namespace
+
+
+
+
+******* Product class & product table  *******
+
+Step-1: Right click on MyAppModels >>> add >>> class >>> product.cs
+
+step-2: Data >>> public DbSet<Product> Product { get; set; }
+
+step-3: tools >>> NuGet Package Manager >>> Package Manager Console >>> Default project: MyApp.DataAccessLayer
+        add-migration AddProduct
+        update-database

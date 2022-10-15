@@ -3,8 +3,9 @@ using MyApp.DataAccessLayer;
 using MyApp.DataAccessLayer.Infrastructure.IRepository;
 using MyAppModels;
 
-namespace MyAppWeb.Controllers
+namespace MyAppWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private IUnitOfWork _unitOfWork;
@@ -17,10 +18,10 @@ namespace MyAppWeb.Controllers
         public IActionResult Index()
         {
             IEnumerable<Category> categories = _unitOfWork.Category.GetAll();
-            
+
             return View(categories);
         }
-        
+
         //create
         [HttpGet]
         public IActionResult Create()
@@ -46,11 +47,11 @@ namespace MyAppWeb.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            if(id == null || id==0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var category = _unitOfWork.Category.GetT(x=>x.Id == id);
+            var category = _unitOfWork.Category.GetT(x => x.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -88,14 +89,14 @@ namespace MyAppWeb.Controllers
             return View(category);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteData(int? id)
         {
             var category = _unitOfWork.Category.GetT(x => x.Id == id);
-            if(category == null)
-            {   
-               return NotFound();
+            if (category == null)
+            {
+                return NotFound();
             }
             _unitOfWork.Category.Delete(category);
             _unitOfWork.Save();

@@ -1,2 +1,2 @@
-# CRUDappUsingASP.netCore
-Practice of C# in ASP.net core 6.0
+# ASP.netCore 6 project
+C#, ASP.net core 6.0, Razor pages, Bootstrap, SQL Server. 
