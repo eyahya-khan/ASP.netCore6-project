@@ -108,3 +108,28 @@ step-2: In  Shared/_Notification.cshtml
 
 
 
+
+******* Devide in different project structure *******
+
+step-1: Right click on solution 'MyApp' >>> add >>> new project >>> class libray >>> MyAppModels
+
+step-2: move model folder into MyAppModels and move all file: Category.cs & ErrorViewModel.cs
+
+step-3: reapeat step-1 with MyAppDataAccessLayer and move "Data" & "Migrations" folder and adjust namespace, update Entity Framework packages and fix the error.
+
+
+
+
+******* Repository pattern (minimize the repeatation of code) *******
+
+step-1: Create folder MyApp.DataAccessLayer >>> Infrastructure >>> IRepository and Repository
+
+
+
+
+******* Scooped repository *******
+
+step-1: In program.cs file add 'builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();' 
+
+step-2: In CategoryController.cs file, we use scooped instead of AddDbContext
+

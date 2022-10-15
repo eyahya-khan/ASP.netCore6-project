@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyAppWeb.Models;
+using MyAppModels;
 using System.Diagnostics;
 
 namespace MyAppWeb.Controllers

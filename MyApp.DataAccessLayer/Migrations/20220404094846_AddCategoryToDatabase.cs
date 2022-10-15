@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace MyAppWeb.Migrations
+namespace MyApp.DataAccessLayer.Migrations
 {
     public partial class AddCategoryToDatabase : Migration
     {
