@@ -1,0 +1,32 @@
+﻿@model MyAppModels.ViewModels.CategoryVM
+
+<form method="post" asp-action="CreateUpdate">
+    <input type="hidden" asp-for="Category.Id"/>
+    <div class="border p-3 mt-4">
+        <div class="row pb-3">
+            <h2 class="text-primary">@((Model.Category == null || Model.Category.Id == 0) ? "Create" : "Update") Category</h2>
+            <hr/>
+        </div>
+        <div asp-validation-summary=All class="text-danger"></div>
+        <div class="row mb-3">
+            <label asp-for="Category!.Name"></label>
+            <input asp-for="Category!.Name" class="form-control" />
+            @*<span asp-validation-for="Name" class="text-danger"></span>*@
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Category!.DisplayOrder"></label>
+            <input asp-for="Category!.DisplayOrder" class="form-control" />
+            
+            @*<span asp-validation-for="DisplayOrder" class="text-danger"></span>*@
+        </div>
+        <button class="btn btn-primary" type="submit">@((Model.Category == null || Model.Category.Id == 0) ? "Create" : "Update")</button>
+    </div>
+    <a asp-action="Index" asp-controller="Category" class="btn btn-primary">Back to list</a>
+</form>
+
+@*for client side validation*@
+@section scripts{
+    @{
+        <partial name = "_ValidationScriptspartial"/>
+    }
+}

@@ -7,21 +7,21 @@ using MyAppModels.ViewModels;
 namespace MyAppWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class ProductController : Controller
     {
         private IUnitOfWork _unitOfWork;
 
-        public CategoryController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            CategoryVM categoryVM = new CategoryVM();
-            categoryVM.categories = _unitOfWork.Category.GetAll();
+            ProductVM productVM = new ProductVM();
+            productVM.products = _unitOfWork.Product.GetAll();
 
-            return View(categoryVM);
+            return View(productVM);
         }
 
         //create
@@ -56,15 +56,15 @@ namespace MyAppWeb.Areas.Admin.Controllers
             }
             else
             {
-            vm.Category = _unitOfWork.Category.GetT(x => x.Id == id);
-            if (vm.Category == null)
-            {
-            return NotFound();
-            }
-            else
-            {
-            return View(vm);
-            }
+                vm.Category = _unitOfWork.Category.GetT(x => x.Id == id);
+                if (vm.Category == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return View(vm);
+                }
             }
         }
 
@@ -74,15 +74,15 @@ namespace MyAppWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(vm.Category.Id == 0)
+                if (vm.Category.Id == 0)
                 {
-                _unitOfWork.Category.Add(vm.Category);
-                TempData["success"] = "Category created successfully.";
+                    _unitOfWork.Category.Add(vm.Category);
+                    TempData["success"] = "Category created successfully.";
                 }
                 else
                 {
                     _unitOfWork.Category.Update(vm.Category);
-                TempData["success"] = "Category updated successfully.";
+                    TempData["success"] = "Category updated successfully.";
                 }
                 _unitOfWork.Save();
                 return RedirectToAction("Index");

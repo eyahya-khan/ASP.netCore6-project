@@ -1,29 +1,29 @@
 ﻿******* Database connection with code first approach ******
 
-step-1: create Model
+step-1: Create Model
         model ==>>> program.cs
 
-step-2: create dbContext
-        Date ==>>> ApplicationDbContext.cs
-        public DbSet<modelname> tablename { get; set; }
-
-step-3:appsettings.json
-"ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=MyAppWebDB;Trusted_Connection=True;MultipleActiveResultSets=true"
-  }
-
-step-4: register db context file to program.cs
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-step-5: install 3 package
+step-2: Install 3 package
         right click on app file >>> choose "Manage NuGet packages..." ans install
         1. Microsoft.EntityFrameworkCore(6.0.3)
         2. Microsoft.EntityFrameworkCoreSqlServer(6.0.3)
         3. Microsoft.EntityFrameworkCoreTools(6.0.3)
+
+step-3: create dbContext
+        Date ==>>> ApplicationDbContext.cs
+        public DbSet<modelname> tablename { get; set; }
+
+step-4: In appsettings.json
+            "ConnectionStrings": {
+                "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=MyAppWebDB;Trusted_Connection=True;MultipleActiveResultSets=true"
+              }
+
+step-5: Register db context file to program.cs
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
 step-6: create database
         tools>>>NuGet Package Manager >>> Package Manager Console
@@ -36,6 +36,14 @@ step-7: Check connection of database
 
         tools >>> connect to database
         server name: (localdb)\mssqllocaldb
+
+
+
+
+******* Create Controller  *******
+
+step-1: Create controller in controller folder
+
 
 
 
@@ -188,3 +196,46 @@ step-2: Add 'IProductRepository Product { get; }' into Repository/IUnitOfWork.cs
 step-3: Change in UnitOfWork.cs file also.
 
 step-4: Update method should be change in CategoryRepository.cs & ProductRepository.cs
+
+
+
+
+******* Combine Create & Update method  *******
+
+(Category Id is null or 0 then goes to 'create' otherwise 'update')
+
+step-1: In Admin/Controllers/views/category/Index.cshtml >>> change 'Edit' & 'Create' into asp-action="CreateUpdate" 
+
+step-2: Create new model => Right click on MyAppModels >>> ViewModels folder >>> CategoryVM.cs
+
+step-3: In CategoryController.cs comment the 'create' part and update the 'edit' part. 
+
+step-4: In CreateUpdate.cs change @model MyAppModels.ViewModels.CategoryVM and change 'Category.Name' 
+
+step-5: In CreateUpdate.cs change     <h2 class="text-primary">@((Model.Category == null || Model.Category.Id == 0) ? "Create" : "Update") Category</h2>
+
+step-6: In CreateUpdate.cs change    <button class="btn btn-primary" type="submit">@((Model.Category == null || Model.Category.Id == 0) ? "Create" : "Update")</button>
+
+
+// add new category//
+step-7: In CategoryVM.cs >>> public IEnumerable<Category> categories { get; set; } = new List<Category>();
+
+step-8: In CategoryControlles.cs >>> Index() method >>> 
+            CategoryVM categoryVM = new CategoryVM();
+            categoryVM.categories = _unitOfWork.Category.GetAll();
+            return View(categoryVM);
+
+step-9: In CategoryController.cs >>> 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUpdate(CategoryVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Add(vm.Category);
+                _unitOfWork.Save();
+                TempData["success"] = "Category updated successfully.";
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
